@@ -118,24 +118,33 @@ if (navbar) {
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 if (menuToggle && navLinks) {
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    // Simple bar animation
+  // Create backdrop element dynamically
+  const backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+
+  const toggleMenu = (forceClose = false) => {
+    const isActive = forceClose ? false : !navLinks.classList.contains('active');
+    navLinks.classList.toggle('active', isActive);
+    backdrop.classList.toggle('active', isActive);
+    
+    // Toggle scroll lock on body
+    document.body.style.overflow = isActive ? 'hidden' : '';
+
     const spans = menuToggle.querySelectorAll('span');
-    spans[0].style.transform = navLinks.classList.contains('active') ? 'rotate(45deg) translate(6px, 5px)' : 'none';
-    spans[1].style.opacity = navLinks.classList.contains('active') ? '0' : '1';
-    spans[2].style.transform = navLinks.classList.contains('active') ? 'rotate(-45deg) translate(6px, -5px)' : 'none';
-  });
+    if (spans.length === 3) {
+      spans[0].style.transform = isActive ? 'rotate(45deg) translate(6px, 5px)' : 'none';
+      spans[1].style.opacity = isActive ? '0' : '1';
+      spans[2].style.transform = isActive ? 'rotate(-45deg) translate(6px, -5px)' : 'none';
+    }
+  };
+
+  menuToggle.addEventListener('click', () => toggleMenu());
+  backdrop.addEventListener('click', () => toggleMenu(true));
 
   // Close menu when clicking links
   navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('active');
-      const spans = menuToggle.querySelectorAll('span');
-      spans[0].style.transform = 'none';
-      spans[1].style.opacity = '1';
-      spans[2].style.transform = 'none';
-    });
+    link.addEventListener('click', () => toggleMenu(true));
   });
 }
 
@@ -408,11 +417,16 @@ if (productsGrid) {
 
   // Set up filter buttons
   const filterBtns = document.querySelectorAll('.filter-btn');
+  const filterToggle = document.getElementById('filter-dropdown-toggle');
+  const filterOptions = document.getElementById('filter-options');
 
   // Set active class based on activeFilter
   filterBtns.forEach(btn => {
     if (btn.getAttribute('data-filter') === activeFilter) {
       btn.classList.add('active');
+      if (filterToggle) {
+        filterToggle.querySelector('span').textContent = `Categoría: ${btn.textContent}`;
+      }
     } else {
       btn.classList.remove('active');
     }
@@ -423,9 +437,33 @@ if (productsGrid) {
       filterBtns.forEach(b => b.classList.remove('active'));
       e.target.classList.add('active');
       activeFilter = e.target.getAttribute('data-filter');
+      
+      // Update dropdown state and label if in mobile
+      if (filterToggle && filterOptions) {
+        filterToggle.querySelector('span').textContent = `Categoría: ${e.target.textContent}`;
+        filterOptions.classList.remove('open');
+        filterToggle.classList.remove('open');
+      }
+      
       renderGrid();
     });
   });
+
+  // Toggle dropdown logic
+  if (filterToggle && filterOptions) {
+    filterToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      filterOptions.classList.toggle('open');
+      filterToggle.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!filterToggle.contains(e.target) && !filterOptions.contains(e.target)) {
+        filterOptions.classList.remove('open');
+        filterToggle.classList.remove('open');
+      }
+    });
+  }
 
   // Set up search box
   const searchInput = document.getElementById('search-input');

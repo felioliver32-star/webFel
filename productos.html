@@ -44,11 +44,17 @@
       <!-- Filters and Search Bar -->
       <div class="products-filter-section">
         <div class="filter-group">
-          <button class="filter-btn active" data-filter="all">Todos</button>
-          <button class="filter-btn" data-filter="sastreria">Sastrería</button>
-          <button class="filter-btn" data-filter="tapados">Abrigos</button>
-          <button class="filter-btn" data-filter="vestidos">Vestidos</button>
-          <button class="filter-btn" data-filter="tejidos">Tejidos</button>
+          <button class="filter-dropdown-toggle" id="filter-dropdown-toggle">
+            <span>Categorías</span>
+            <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>
+          </button>
+          <div class="filter-options" id="filter-options">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="sastreria">Sastrería</button>
+            <button class="filter-btn" data-filter="tapados">Abrigos</button>
+            <button class="filter-btn" data-filter="vestidos">Vestidos</button>
+            <button class="filter-btn" data-filter="tejidos">Tejidos</button>
+          </div>
         </div>
 
         <div class="search-box">

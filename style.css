@@ -202,21 +202,23 @@ textarea {
 }
 
 /* Navbar transparent link override rules */
-.navbar:not(.scrolled) .nav-links a {
-  color: var(--color-white);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-}
+@media (min-width: 769px) {
+  .navbar:not(.scrolled) .nav-links a {
+    color: var(--color-white);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  }
 
-.navbar:not(.scrolled) .nav-links a::after {
-  background-color: var(--color-white);
+  .navbar:not(.scrolled) .nav-links a::after {
+    background-color: var(--color-white);
+  }
+
+  .navbar:not(.scrolled) .nav-links a.active {
+    color: var(--color-white);
+  }
 }
 
 .navbar:not(.scrolled) .menu-toggle span {
   background-color: var(--color-white);
-}
-
-.navbar:not(.scrolled) .nav-links a.active {
-  color: var(--color-white);
 }
 
 .logo {
@@ -294,6 +296,27 @@ textarea {
 .nav-links a.active::after {
   width: 100%;
   left: 0;
+}
+
+/* Mobile Menu Backdrop */
+.nav-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(21, 21, 21, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.nav-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Mobile Menu Button */
@@ -704,6 +727,38 @@ textarea {
 }
 
 .filter-group {
+  position: relative;
+  display: flex;
+}
+
+.filter-dropdown-toggle {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--color-white);
+  border: 1px solid var(--border-glass);
+  color: var(--color-primary);
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.filter-dropdown-toggle svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
+}
+
+.filter-dropdown-toggle.open svg {
+  transform: rotate(180deg);
+}
+
+.filter-options {
   display: flex;
   gap: 1rem;
 }
@@ -1250,11 +1305,11 @@ textarea.form-control {
 @media (max-width: 1024px) {
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 
   .carousel-slide {
     flex: 0 0 calc((100% - 2rem) / 2);
-    /* 2 cards */
   }
 
   .about-grid {
@@ -1268,17 +1323,21 @@ textarea.form-control {
 
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 4rem;
+    gap: 3rem;
   }
 }
 
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 3rem;
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
+  .hero-slogan-img {
+    height: clamp(35px, 10vw, 48px);
   }
 
   .section {
-    padding: 5rem 0;
+    padding: 4rem 0;
   }
 
   .menu-toggle {
@@ -1311,16 +1370,75 @@ textarea.form-control {
 
   .carousel-slide {
     flex: 0 0 100%;
-    /* 1 card on mobile */
+  }
+
+  .products-filter-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.2rem;
+  }
+
+  .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
+  }
+
+  .filter-dropdown-toggle {
+    display: flex;
+  }
+
+  .filter-options {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-white);
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-medium);
+    z-index: 100;
+    gap: 0;
+    margin-top: 4px;
+  }
+
+  .filter-options.open {
+    display: flex;
+  }
+
+  .filter-options .filter-btn {
+    width: 100%;
+    text-align: left;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-light);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+  }
+
+  .filter-options .filter-btn:last-child {
+    border-bottom: none;
+  }
+
+  .filter-options .filter-btn.active {
+    background-color: var(--color-light);
+    font-weight: 600;
+  }
+
+  .search-box {
+    width: 100%;
   }
 
   .products-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
   .contact-form-panel {
@@ -1329,15 +1447,19 @@ textarea.form-control {
 
   .modal-content {
     grid-template-columns: 1fr;
-    width: 95%;
+    width: 90%;
+    max-width: 480px;
+    max-height: 85vh;
+    border-radius: 4px;
   }
 
   .modal-gallery {
-    min-height: 300px;
+    min-height: 350px;
+    height: 350px;
   }
 
   .modal-details {
-    padding: 2rem;
+    padding: 2rem 1.5rem;
   }
 }
 
