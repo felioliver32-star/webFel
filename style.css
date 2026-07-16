@@ -241,9 +241,10 @@ textarea {
 }
 
 .hero-slogan-img {
-  height: 55px;
-  width: auto;
-  margin-bottom: 1.8rem;
+  width: 100%;
+  max-width: 750px;
+  height: auto;
+  margin: 0 auto 2.5rem auto;
   display: block;
 }
 
@@ -385,7 +386,12 @@ textarea {
 }
 
 .hero-content {
-  max-width: 600px;
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: var(--color-white);
   opacity: 0;
   transform: translateY(30px);
@@ -421,6 +427,7 @@ textarea {
 
 .hero-actions {
   display: flex;
+  justify-content: center;
   gap: 1.5rem;
 }
 
@@ -1220,6 +1227,45 @@ textarea.form-control {
   object-fit: cover;
 }
 
+
+.modal-gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border-glass);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  transition: var(--transition-fast);
+  z-index: 6;
+  backdrop-filter: blur(4px);
+}
+
+.modal-gallery-arrow:hover {
+  background: var(--color-white);
+  color: var(--color-accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.modal-gallery-arrow.prev {
+  left: 1rem;
+}
+
+.modal-gallery-arrow.next {
+  right: 1rem;
+}
+
+.modal-gallery-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
 .modal-details {
   padding: 3.5rem;
   display: flex;
@@ -1333,7 +1379,8 @@ textarea.form-control {
   }
 
   .hero-slogan-img {
-    height: clamp(35px, 10vw, 48px);
+    max-width: clamp(280px, 85vw, 550px);
+    margin-bottom: 2rem;
   }
 
   .section {

@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Colección Fel | Catálogo de Diseño de Autor</title>
-  <meta name="description" content="Explorá el catálogo completo de Fel. Sastrería de alta gama, abrigos estructurados y vestidos de seda fina con precios y disponibilidad en tiempo real.">
+  <meta name="description"
+    content="Explorá el catálogo completo de Fel. Remeras, pantalones de diseño, abrigos estructurados y accesorios exclusivos con precios y disponibilidad en tiempo real.">
   <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar scrolled" id="main-navbar"> <!-- Forced solid navbar state on catalog page for readability -->
     <div class="container">
       <a href="./index.html" class="logo" id="brand-logo">
-        <img src="./assets/images/LOGO fel.png" alt="FEL" class="logo-img">
+        <img src="./assets/images/Feel TM.png" alt="FEL" class="logo-img">
       </a>
       <ul class="nav-links" id="navbar-links">
         <li><a href="./index.html#inicio">Inicio</a></li>
@@ -32,7 +35,7 @@
   <!-- CATALOG HERO HEADER -->
   <header class="products-header">
     <div class="container">
-      <span class="section-subtitle" style="margin-bottom: 1rem;">Colección Atemporal</span>
+      <span class="section-subtitle" style="margin-bottom: 1rem;">Colecciones</span>
       <h1 style="font-size: 3rem;">El Catálogo</h1>
     </div>
   </header>
@@ -40,25 +43,30 @@
   <!-- PRODUCTS GRID VIEW -->
   <section class="section" style="padding-top: 4rem;">
     <div class="container">
-      
+
       <!-- Filters and Search Bar -->
       <div class="products-filter-section">
         <div class="filter-group">
           <button class="filter-dropdown-toggle" id="filter-dropdown-toggle">
             <span>Categorías</span>
-            <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5z" fill="currentColor" />
+            </svg>
           </button>
           <div class="filter-options" id="filter-options">
             <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="sastreria">Sastrería</button>
+            <button class="filter-btn" data-filter="pantalones">Pantalones</button>
             <button class="filter-btn" data-filter="tapados">Abrigos</button>
-            <button class="filter-btn" data-filter="vestidos">Vestidos</button>
-            <button class="filter-btn" data-filter="tejidos">Tejidos</button>
+            <button class="filter-btn" data-filter="remeras">Remeras</button>
+            <button class="filter-btn" data-filter="accesorios">Accesorios</button>
           </div>
         </div>
 
         <div class="search-box">
-          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+          </svg>
           <input type="text" id="search-input" placeholder="Buscar prenda...">
         </div>
       </div>
@@ -76,21 +84,20 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="#" class="logo"><img src="./assets/images/LOGO fel.png" alt="FEL" class="logo-img-footer"></a>
-          <img src="./assets/images/Feel TM.png" alt="Fel is feeling" class="footer-slogan-img">
-          <p>Sastrería de autor y piezas atemporales. Diseñadas y confeccionadas a mano con hilados naturales en Santa Fe, Argentina.</p>
+          <a href="#" class="logo"><img src="./assets/images/Feel TM.png" alt="FEL" class="logo-img-footer"></a>
+          <p>Confecciones de autor y piezas para todas las personas. Diseñadas con amor y mucho detalle.</p>
         </div>
-        
+
         <div>
           <h4 class="footer-title">Colecciones</h4>
           <ul class="footer-links">
-            <li><a href="./productos.html?filter=sastreria">Sastrería</a></li>
+            <li><a href="./productos.html?filter=pantalones">Pantalones</a></li>
             <li><a href="./productos.html?filter=tapados">Abrigos</a></li>
-            <li><a href="./productos.html?filter=vestidos">Vestidos</a></li>
-            <li><a href="./productos.html?filter=tejidos">Tejidos de Punto</a></li>
+            <li><a href="./productos.html?filter=remeras">Remeras</a></li>
+            <li><a href="./productos.html?filter=accesorios">Accesorios</a></li>
           </ul>
         </div>
-        
+
         <div>
           <h4 class="footer-title">Menú</h4>
           <ul class="footer-links">
@@ -100,25 +107,31 @@
             <li><a href="./index.html#contacto">Contacto</a></li>
           </ul>
         </div>
-        
+
         <div>
           <h4 class="footer-title">Newsletter</h4>
-          <p style="color: #E2DCD5; font-size: 0.85rem; margin-bottom: 1rem;">Suscribite para recibir avisos de nuevos ingresos y ventas exclusivas de taller.</p>
-          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Suscrito correctamente a las novedades de Fel.'); this.reset();">
-            <input type="email" class="newsletter-input" placeholder="Tu dirección de correo" aria-label="Correo electrónico para newsletter" required>
+          <p style="color: #E2DCD5; font-size: 0.85rem; margin-bottom: 1rem;">Suscribite para recibir avisos de nuevos
+            ingresos y ventas exclusivas de taller.</p>
+          <form class="newsletter-form"
+            onsubmit="event.preventDefault(); alert('Suscrito correctamente a las novedades de Fel.'); this.reset();">
+            <input type="email" class="newsletter-input" placeholder="Tu dirección de correo"
+              aria-label="Correo electrónico para newsletter" required>
             <button type="submit" class="newsletter-btn" aria-label="Suscribirse">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
             </button>
           </form>
         </div>
       </div>
-      
+
       <div class="footer-bottom">
         <div>&copy; 2026 FEL Diseño de Autor. Todos los derechos reservados.</div>
         <div class="footer-socials">
-          <a href="#" aria-label="Instagram">Instagram</a>
-          <a href="#" aria-label="Pinterest">Pinterest</a>
-          <a href="#" aria-label="Facebook">Facebook</a>
+          <a href="https://www.instagram.com/fel.estudio/" target="_blank" aria-label="Instagram">Instagram</a>
+          <a href="https://ar.pinterest.com/Oliverrr02/" target="_blank" aria-label="Pinterest">Pinterest</a>
         </div>
       </div>
     </div>
@@ -129,7 +142,10 @@
     <div class="modal-backdrop"></div>
     <div class="modal-content">
       <button class="modal-close-btn" id="modal-close" aria-label="Cerrar ventana">
-        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
       </button>
       <div class="modal-gallery">
         <img id="modal-img" src="" alt="">
@@ -138,31 +154,37 @@
         <span class="modal-category" id="modal-cat">Categoría</span>
         <h2 class="modal-title" id="modal-title">Nombre del Producto</h2>
         <div class="modal-price" id="modal-price">$ 0</div>
-        
+
         <div class="modal-divider"></div>
-        
+
         <p class="modal-desc" id="modal-desc">Descripción detallada del producto.</p>
-        
+
         <div class="modal-meta">
           <div class="modal-meta-item">
             <span class="modal-meta-label">Composición</span>
             <span class="modal-meta-value" id="modal-materials">Materiales</span>
           </div>
           <div class="modal-meta-item">
-            <span class="modal-meta-label">Cuidado</span>
-            <span class="modal-meta-value" id="modal-care">Cuidado</span>
+            <span class="modal-meta-label">Talles</span>
+            <span class="modal-meta-value" id="modal-sizes">Talles</span>
           </div>
           <div class="modal-meta-item">
             <span class="modal-meta-label">Estado</span>
             <span class="modal-meta-value" id="modal-status">Disponible</span>
           </div>
         </div>
-        
-        <a href="#" id="modal-consult-btn" class="btn btn-primary" style="text-align: center; margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 0.5rem;" target="_blank"><svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.504-5.714-1.464L0 24zm6.586-3.834l.366.218c1.6.952 3.454 1.455 5.352 1.456 5.793 0 10.511-4.721 10.514-10.518.001-2.807-1.09-5.446-3.076-7.437C17.466 2.395 14.823 1.3 12.012 1.3c-5.797 0-10.518 4.722-10.521 10.52-.001 1.947.509 3.847 1.479 5.487l.239.406-1.011 3.693 3.788-.992zm11.758-7.66c-.301-.15-1.782-.88-2.059-.98-.277-.101-.48-.15-.68.15-.2.301-.776.98-.952 1.18-.176.2-.352.226-.653.075-1.393-.697-2.316-1.229-3.238-2.81-.242-.416.242-.386.693-1.286.075-.15.038-.282-.019-.382-.056-.1-.48-1.157-.658-1.582-.173-.415-.349-.359-.48-.365-.125-.005-.268-.006-.411-.006s-.375.053-.571.267c-.196.213-.75.733-.75 1.79 0 1.056.769 2.079.876 2.223.107.144 1.51 2.305 3.659 3.233.51.221.908.353 1.218.452.513.163.98.14 1.348.084.411-.062 1.782-.73 2.033-1.433.253-.704.253-1.306.177-1.432-.077-.127-.278-.201-.58-.352z"/></svg>Consultar por WhatsApp</a>
+
+        <a href="#" id="modal-consult-btn" class="btn btn-primary"
+          style="text-align: center; margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+          target="_blank"><svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24">
+            <path
+              d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.504-5.714-1.464L0 24zm6.586-3.834l.366.218c1.6.952 3.454 1.455 5.352 1.456 5.793 0 10.511-4.721 10.514-10.518.001-2.807-1.09-5.446-3.076-7.437C17.466 2.395 14.823 1.3 12.012 1.3c-5.797 0-10.518 4.722-10.521 10.52-.001 1.947.509 3.847 1.479 5.487l.239.406-1.011 3.693 3.788-.992zm11.758-7.66c-.301-.15-1.782-.88-2.059-.98-.277-.101-.48-.15-.68.15-.2.301-.776.98-.952 1.18-.176.2-.352.226-.653.075-1.393-.697-2.316-1.229-3.238-2.81-.242-.416.242-.386.693-1.286.075-.15.038-.282-.019-.382-.056-.1-.48-1.157-.658-1.582-.173-.415-.349-.359-.48-.365-.125-.005-.268-.006-.411-.006s-.375.053-.571.267c-.196.213-.75.733-.75 1.79 0 1.056.769 2.079.876 2.223.107.144 1.51 2.305 3.659 3.233.51.221.908.353 1.218.452.513.163.98.14 1.348.084.411-.062 1.782-.73 2.033-1.433.253-.704.253-1.306.177-1.432-.077-.127-.278-.201-.58-.352z" />
+          </svg>Consultar por WhatsApp</a>
       </div>
     </div>
   </div>
 
   <script src="./app.js"></script>
 </body>
+
 </html>

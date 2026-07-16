@@ -2,94 +2,72 @@
 const PRODUCTS = [
   {
     id: "coat-linen",
-    name: "Tapado de Lino Estructurado",
-    category: "tapados",
-    categoryLabel: "Abrigos",
-    price: 185000,
+    name: "Remera negra doble manga. ",
+    category: "remeras",
+    categoryLabel: "Remeras",
+    price: 30000,
     availability: "instock",
     availabilityLabel: "Disponible",
     image: "./assets/coat_linen.png",
-    description: "Un tapado de corte impecable confeccionado en lino rústico pesado. Con silueta estructurada, bolsillos solapados y detalles de costura a la vista, esta prenda reinterpreta la sastrería clásica con una caída contemporánea y natural.",
-    materials: "100% Lino Orgánico Lavado",
-    care: "Limpieza en seco profesional. No usar blanqueadores."
+    description: "Remera negra mangas cortas con mangas largas integradas en un tejido grueso con diseño.",
+    materials: "jersey 100% algodon",
+    sizes: "M - L"
   },
   {
     id: "coat-linen",
-    name: "Tapado de Lino NO ESTRUCTURADO",
-    category: "tapados",
-    categoryLabel: "Abrigos",
-    price: 145000,
+    name: "Remera beige doble manga",
+    category: "remeras",
+    categoryLabel: "Remeras",
+    price: 30000,
     availability: "instock",
     availabilityLabel: "Disponible",
     image: "./assets/dress_silk.png",
-    description: "Un tapado de corte impecable confeccionado en lino rústico pesado. Con silueta estructurada, bolsillos solapados y detalles de costura a la vista, esta prenda reinterpreta la sastrería clásica con una caída contemporánea y natural.",
-    materials: "100% Lino Orgánico Lavado",
-    care: "Limpieza en seco profesional. No usar blanqueadores."
+    description: "Remera beige mangas cortas con mangas largas integradas en un tejido grueso con diseño.",
+    materials: "jersery 100% algodon",
+    sizes: "M - L"
   },
-  {
-    id: "coat-linen",
-    name: "Tapado de Lino NO ESTRUCTURADO2",
-    category: "tapados",
-    categoryLabel: "Abrigos",
-    price: 145000,
-    availability: "outofstock",
-    availabilityLabel: "AGOTADO",
-    image: "./assets/coat_linen.png",
-    description: "Un tapado de corte impecable confeccionado en lino rústico pesado. Con silueta estructurada, bolsillos solapados y detalles de costura a la vista, esta prenda reinterpreta la sastrería clásica con una caída contemporánea y natural.",
-    materials: "100% Lino Orgánico Lavado",
-    care: "Limpieza en seco profesional. No usar blanqueadores."
-  },
-  {
-    id: "dress-silk",
-    name: "Vestido Drapé de Seda",
-    category: "vestidos",
-    categoryLabel: "Vestidos",
-    price: 240000,
-    availability: "lowstock",
-    availabilityLabel: "Últimas Unidades",
-    image: "./assets/dress_silk.png",
-    description: "Vestido largo de diseño asimétrico drapeado en satén de seda fluida. El sutil escote bote y su silueta de caída lánguida crean una prenda de gala minimalista y etérea, ideal para destacar con sobriedad y distinción.",
-    materials: "100% Satén de Seda natural",
-    care: "Lavar a mano con agua fría y jabón neutro. Secar plano a la sombra."
-  },
+
   {
     id: "blazer-wool",
-    name: "Blazer Sastrería de Lana",
-    category: "sastreria",
-    categoryLabel: "Sastrería",
-    price: 210000,
+    name: "Pantalon Octubre",
+    category: "pantalones",
+    categoryLabel: "Pantalones",
+    price: 55000,
     availability: "instock",
     availabilityLabel: "Disponible",
     image: "./assets/blazer_wool.png",
-    description: "Saco sastrero cruzado de corte boxy elaborado en lana fría de alta calidad. Forro interno de viscosa jacquard al tono, solapas de muesca pronunciadas y botones de asta natural grabados artesanalmente.",
-    materials: "80% Lana Merino, 20% Cachemira. Forro: 100% Viscosa.",
-    care: "Limpieza en seco únicamente. Planchar a baja temperatura con paño protector."
+    images: ["./assets/blazer_wool.png", "./assets/blazer_wool delantero.png"],
+    description: "Pantalon largo recto de corderoy marron con detalles en tejido con diseño. Bolsillos delanteros y traseros, cierre de bragueta reforzado y boton de metal con diseño.",
+    materials: "Corderoy",
+    sizes: "40"
   },
   {
     id: "sweater-knit",
-    name: "Sweater Knit de Mohair",
-    category: "tejidos",
-    categoryLabel: "Tejidos",
-    price: 145000,
+    name: "Gorro beanie rigido",
+    category: "accesorios",
+    categoryLabel: "Accesorios",
+    price: 20000,
     availability: "instock",
     availabilityLabel: "Disponible",
     image: "./assets/sweater_knit.png",
-    description: "Sweater tejido a mano en punto inglés con hilado de mohair premium y lana merina superwash. De tacto esponjoso, mangas globo con puños compactos y cuello redondo relajado.",
-    materials: "70% Kid Mohair, 30% Lana Merino Extra Fina",
-    care: "Lavar a mano en agua fría. No centrifugar. Secar horizontal sobre toalla seca."
+    images: ["./assets/sweater_knit.png", "./assets/sweater_knit costado.png"],
+    description: "Gorro estilo beanie rigido con los bordes exteriores en corderoy marron y el centro en un tejido claro con diseño.",
+    materials: "Corderoy",
+    sizes: "L (60cm)"
   },
   {
     id: "trousers-tailored",
-    name: "Pantalón de Lino y Seda Sand",
-    category: "sastreria",
-    categoryLabel: "Sastrería",
-    price: 155000,
-    availability: "outofstock",
-    availabilityLabel: "Agotado",
+    name: "Abrigo Octubre",
+    category: "tapados",
+    categoryLabel: "Abrigos",
+    price: 65000,
+    availability: "instock",
+    availabilityLabel: "Disponible",
     image: "./assets/trousers_tailored.png",
-    description: "Pantalón pinzado de tiro alto con botamanga ancha. Confeccionado en un hilado exclusivo que combina la estructura noble del lino con el brillo sutil y la caída de la seda natural.",
-    materials: "60% Lino, 40% Seda Salvaje",
-    care: "Limpieza en seco recomendada. Lavado suave a mano si es necesario."
+    images: ["./assets/trousers_tailored.png", "./assets/trousers_tailored espalda.png"],
+    description: "Abrigo de corderoy y tejido con diseño, forrado en todo su interior con lanilla. Cierre reforzado y cuello estilo camisa.",
+    materials: "Corderoy, Lanilla",
+    sizes: "L/XL"
   }
 ];
 
@@ -127,7 +105,7 @@ if (menuToggle && navLinks) {
     const isActive = forceClose ? false : !navLinks.classList.contains('active');
     navLinks.classList.toggle('active', isActive);
     backdrop.classList.toggle('active', isActive);
-    
+
     // Toggle scroll lock on body
     document.body.style.overflow = isActive ? 'hidden' : '';
 
@@ -156,15 +134,54 @@ function openProductModal(productId) {
   const product = PRODUCTS.find(p => p.id === productId);
   if (!product || !modal) return;
 
+  // Handle dynamic gallery images
+  const galleryContainer = document.querySelector('.modal-gallery');
+  if (galleryContainer) {
+    const mainImgSrc = product.images ? product.images[0] : product.image;
+    galleryContainer.innerHTML = `<img id="modal-img" src="${mainImgSrc}" alt="${product.name}">`;
+
+    if (product.images && product.images.length > 1) {
+      let currentImgIdx = 0;
+
+      // Render arrows
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'modal-gallery-arrow prev';
+      prevBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/></svg>`;
+      prevBtn.setAttribute('aria-label', 'Anterior imagen');
+
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'modal-gallery-arrow next';
+      nextBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/></svg>`;
+      nextBtn.setAttribute('aria-label', 'Siguiente imagen');
+
+      const updateGalleryState = (index) => {
+        currentImgIdx = (index + product.images.length) % product.images.length;
+        const targetSrc = product.images[currentImgIdx];
+        document.getElementById('modal-img').src = targetSrc;
+      };
+
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateGalleryState(currentImgIdx - 1);
+      });
+
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateGalleryState(currentImgIdx + 1);
+      });
+
+      galleryContainer.appendChild(prevBtn);
+      galleryContainer.appendChild(nextBtn);
+    }
+  }
+
   // Populate modal details
-  document.getElementById('modal-img').src = product.image;
-  document.getElementById('modal-img').alt = product.name;
   document.getElementById('modal-cat').textContent = product.categoryLabel;
   document.getElementById('modal-title').textContent = product.name;
   document.getElementById('modal-price').textContent = formatPrice(product.price);
   document.getElementById('modal-desc').textContent = product.description;
   document.getElementById('modal-materials').textContent = product.materials;
-  document.getElementById('modal-care').textContent = product.care;
+  document.getElementById('modal-sizes').textContent = product.sizes;
 
   // Handle Availability Badge
   const statusElement = document.getElementById('modal-status');
@@ -437,14 +454,14 @@ if (productsGrid) {
       filterBtns.forEach(b => b.classList.remove('active'));
       e.target.classList.add('active');
       activeFilter = e.target.getAttribute('data-filter');
-      
+
       // Update dropdown state and label if in mobile
       if (filterToggle && filterOptions) {
         filterToggle.querySelector('span').textContent = `Categoría: ${e.target.textContent}`;
         filterOptions.classList.remove('open');
         filterToggle.classList.remove('open');
       }
-      
+
       renderGrid();
     });
   });
@@ -477,3 +494,21 @@ if (productsGrid) {
   // Initial render
   renderGrid();
 }
+
+// ----------------------------------------
+// CONTACT FORM TO WHATSAPP
+// ----------------------------------------
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = document.getElementById('message').value;
+
+    const textMsg = message;
+    const whatsappUrl = `https://wa.me/5493424810192?text=${encodeURIComponent(textMsg)}`;
+
+    window.open(whatsappUrl, '_blank');
+    contactForm.reset();
+  });
+}
+
