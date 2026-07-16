@@ -36,7 +36,7 @@ const PRODUCTS = [
     availability: "instock",
     availabilityLabel: "Disponible",
     image: "./assets/blazer_wool.png",
-    images: ["./assets/blazer_wool.png", "./assets/blazer_wool delantero.png"],
+    images: ["./assets/blazer_wool.png", "./assets/blazer_wooldelantero.png"],
     description: "Pantalon largo recto de corderoy marron con detalles en tejido con diseño. Bolsillos delanteros y traseros, cierre de bragueta reforzado y boton de metal con diseño.",
     materials: "Corderoy",
     sizes: "40"
@@ -50,7 +50,7 @@ const PRODUCTS = [
     availability: "instock",
     availabilityLabel: "Disponible",
     image: "./assets/sweater_knit.png",
-    images: ["./assets/sweater_knit.png", "./assets/sweater_knit costado.png"],
+    images: ["./assets/sweater_knit.png", "./assets/sweater_knitcostado.png"],
     description: "Gorro estilo beanie rigido con los bordes exteriores en corderoy marron y el centro en un tejido claro con diseño.",
     materials: "Corderoy",
     sizes: "L (60cm)"
@@ -64,7 +64,7 @@ const PRODUCTS = [
     availability: "instock",
     availabilityLabel: "Disponible",
     image: "./assets/trousers_tailored.png",
-    images: ["./assets/trousers_tailored.png", "./assets/trousers_tailored espalda.png"],
+    images: ["./assets/trousers_tailored.png", "./assets/trousers_tailoredespalda.png"],
     description: "Abrigo de corderoy y tejido con diseño, forrado en todo su interior con lanilla. Cierre reforzado y cuello estilo camisa.",
     materials: "Corderoy, Lanilla",
     sizes: "L/XL"
