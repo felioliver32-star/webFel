@@ -193,7 +193,7 @@ function openProductModal(productId) {
   if (consultBtn) {
     const formattedPrice = formatPrice(product.price);
     const textMsg = `Hola Felipe, me interesa consultar por la prenda "${product.name}" (${formattedPrice}). ¿Tienen stock disponible?`;
-    consultBtn.href = `https://wa.me/543456450663?text=${encodeURIComponent(textMsg)}`;
+    consultBtn.href = `https://wa.me/5493456450663?text=${encodeURIComponent(textMsg)}`;
   }
 
   // Open modal
@@ -505,7 +505,7 @@ if (contactForm) {
     const message = document.getElementById('message').value;
 
     const textMsg = message;
-    const whatsappUrl = `https://wa.me/5493424810192?text=${encodeURIComponent(textMsg)}`;
+    const whatsappUrl = `https://wa.me/5493456450663?text=${encodeURIComponent(textMsg)}`;
 
     window.open(whatsappUrl, '_blank');
     contactForm.reset();
