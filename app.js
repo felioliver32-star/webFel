@@ -6,21 +6,21 @@ const PRODUCTS = [
     category: "remeras",
     categoryLabel: "Remeras",
     price: 30000,
-    availability: "instock",
-    availabilityLabel: "Disponible",
+    availability: "ofstock",
+    availabilityLabel: "Agotado",
     image: "./assets/coat_linen.png",
     description: "Remera negra mangas cortas con mangas largas integradas en un tejido grueso con diseño.",
     materials: "jersey 100% algodon",
     sizes: "M - L"
   },
   {
-    id: "coat-linen",
+    id: "coat-linen-beige",
     name: "Remera beige doble manga",
     category: "remeras",
     categoryLabel: "Remeras",
     price: 30000,
-    availability: "instock",
-    availabilityLabel: "Disponible",
+    availability: "ofstock",
+    availabilityLabel: "Agotado",
     image: "./assets/dress_silk.png",
     description: "Remera beige mangas cortas con mangas largas integradas en un tejido grueso con diseño.",
     materials: "jersery 100% algodon",
@@ -33,8 +33,8 @@ const PRODUCTS = [
     category: "pantalones",
     categoryLabel: "Pantalones",
     price: 55000,
-    availability: "instock",
-    availabilityLabel: "Disponible",
+    availability: "ofstock",
+    availabilityLabel: "Agotado",
     image: "./assets/blazer_wool.png",
     images: ["./assets/blazer_wool.png", "./assets/blazer_wooldelantero.png"],
     description: "Pantalon largo recto de corderoy marron con detalles en tejido con diseño. Bolsillos delanteros y traseros, cierre de bragueta reforzado y boton de metal con diseño.",
@@ -47,8 +47,8 @@ const PRODUCTS = [
     category: "accesorios",
     categoryLabel: "Accesorios",
     price: 20000,
-    availability: "instock",
-    availabilityLabel: "Disponible",
+    availability: "ofstock",
+    availabilityLabel: "Agotado",
     image: "./assets/sweater_knit.png",
     images: ["./assets/sweater_knit.png", "./assets/sweater_knitcostado.png"],
     description: "Gorro estilo beanie rigido con los bordes exteriores en corderoy marron y el centro en un tejido claro con diseño.",
@@ -61,8 +61,8 @@ const PRODUCTS = [
     category: "tapados",
     categoryLabel: "Abrigos",
     price: 65000,
-    availability: "instock",
-    availabilityLabel: "Disponible",
+    availability: "ofstock",
+    availabilityLabel: "Agotado",
     image: "./assets/trousers_tailored.png",
     images: ["./assets/trousers_tailored.png", "./assets/trousers_tailoredespalda.png"],
     description: "Abrigo de corderoy y tejido con diseño, forrado en todo su interior con lanilla. Cierre reforzado y cuello estilo camisa.",
@@ -181,20 +181,61 @@ function openProductModal(productId) {
   document.getElementById('modal-price').textContent = formatPrice(product.price);
   document.getElementById('modal-desc').textContent = product.description;
   document.getElementById('modal-materials').textContent = product.materials;
-  document.getElementById('modal-sizes').textContent = product.sizes;
+  // Handle Sizes Option Selector
+  const sizesContainer = document.getElementById('modal-sizes');
+  if (sizesContainer) {
+    const sizeOptions = ['XS', 'S', 'M', 'L', 'XL'];
+    let selectedSize = 'M'; // Default to 'M'
+
+    const updateWhatsAppLink = (size) => {
+      const consultBtn = document.getElementById('modal-consult-btn');
+      if (consultBtn) {
+        if (product.availability === 'ofstock' || product.availability === 'outofstock') {
+          consultBtn.innerHTML = 'Solicitar informacion';
+          consultBtn.href = 'index.html#contacto';
+          consultBtn.target = '_self';
+          consultBtn.onclick = () => {
+            closeModal();
+          };
+        } else {
+          consultBtn.target = '_blank';
+          consultBtn.onclick = null;
+          const formattedPrice = formatPrice(product.price);
+          const textMsg = `Hola Felipe, me interesa consultar por la prenda "${product.name.trim()}" en talle ${size} (${formattedPrice}). ¿Tienen stock disponible?`;
+          consultBtn.href = `https://wa.me/5493456450663?text=${encodeURIComponent(textMsg)}`;
+          consultBtn.innerHTML = `<svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24">
+            <path
+              d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.504-5.714-1.464L0 24zm6.586-3.834l.366.218c1.6.952 3.454 1.455 5.352 1.456 5.793 0 10.511-4.721 10.514-10.518.001-2.807-1.09-5.446-3.076-7.437C17.466 2.395 14.823 1.3 12.012 1.3c-5.797 0-10.518 4.722-10.521 10.52-.001 1.947.509 3.847 1.479 5.487l.239.406-1.011 3.693 3.788-.992zm11.758-7.66c-.301-.15-1.782-.88-2.059-.98-.277-.101-.48-.15-.68.15-.2.301-.776.98-.952 1.18-.176.2-.352.226-.653.075-1.393-.697-2.316-1.229-3.238-2.81-.242-.416.242-.386.693-1.286.075-.15.038-.282-.019-.382-.056-.1-.48-1.157-.658-1.582-.173-.415-.349-.359-.48-.365-.125-.005-.268-.006-.411-.006s-.375.053-.571.267c-.196.213-.75.733-.75 1.79 0 1.056.769 2.079.876 2.223.107.144 1.51 2.305 3.659 3.233.51.221.908.353 1.218.452.513.163.98.14 1.348.084.411-.062 1.782-.73 2.033-1.433.253-.704.253-1.306.177-1.432-.077-.127-.278-.201-.58-.352z" />
+          </svg>Consultar por WhatsApp`;
+        }
+      }
+    };
+
+    sizesContainer.innerHTML = sizeOptions.map(size => {
+      const isSelected = size === selectedSize;
+      return `<button class="size-btn ${isSelected ? 'active' : ''}" data-size="${size}">${size}</button>`;
+    }).join('');
+
+    // Set initial link
+    updateWhatsAppLink(selectedSize);
+
+    // Add click listeners to size buttons
+    const sizeButtons = sizesContainer.querySelectorAll('.size-btn');
+    sizeButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        sizeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const newSize = btn.getAttribute('data-size');
+        updateWhatsAppLink(newSize);
+      });
+    });
+  }
 
   // Handle Availability Badge
   const statusElement = document.getElementById('modal-status');
   statusElement.className = `modal-meta-value ${product.availability}`;
   statusElement.textContent = product.availabilityLabel;
-
-  // Handle WhatsApp button link
-  const consultBtn = document.getElementById('modal-consult-btn');
-  if (consultBtn) {
-    const formattedPrice = formatPrice(product.price);
-    const textMsg = `Hola Felipe, me interesa consultar por la prenda "${product.name}" (${formattedPrice}). ¿Tienen stock disponible?`;
-    consultBtn.href = `https://wa.me/5493456450663?text=${encodeURIComponent(textMsg)}`;
-  }
 
   // Open modal
   modal.classList.add('active');
