@@ -2,11 +2,11 @@
 const PRODUCTS = [
   {
     id: "coat-linen",
-    name: "Remera negra doble manga. ",
+    name: "Remera negra doble manga",
     category: "remeras",
     categoryLabel: "Remeras",
     price: 30000,
-    availability: "ofstock",
+    availability: "ofsotck",
     availabilityLabel: "Agotado",
     image: "./assets/coat_linen.png",
     description: "Remera negra mangas cortas con mangas largas integradas en un tejido grueso con diseño.",
@@ -78,6 +78,218 @@ function formatPrice(amount) {
     currency: 'ARS',
     minimumFractionDigits: 0
   }).format(amount);
+}
+
+// ----------------------------------------
+// SHOPPING CART STATE MANAGEMENT
+// ----------------------------------------
+let cart = [];
+
+function loadCart() {
+  try {
+    const saved = localStorage.getItem('fel_cart');
+    if (saved) {
+      cart = JSON.parse(saved);
+    }
+  } catch (e) {
+    cart = [];
+  }
+  updateCartUI();
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem('fel_cart', JSON.stringify(cart));
+  } catch (e) {
+    console.error('Error guardando el changuito:', e);
+  }
+  updateCartUI();
+}
+
+function addToCart(product, size, qty = 1) {
+  const existingIndex = cart.findIndex(item => item.id === product.id && item.size === size);
+  if (existingIndex > -1) {
+    cart[existingIndex].quantity += qty;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      categoryLabel: product.categoryLabel,
+      price: product.price,
+      image: product.images ? product.images[0] : product.image,
+      size: size,
+      quantity: qty
+    });
+  }
+  saveCart();
+  showToast(`Prenda agregada al changuito: <strong>${product.name.trim()}</strong> (Talle ${size})`);
+}
+
+function updateCartItemQuantity(id, size, delta) {
+  const index = cart.findIndex(item => item.id === id && item.size === size);
+  if (index > -1) {
+    cart[index].quantity += delta;
+    if (cart[index].quantity <= 0) {
+      cart.splice(index, 1);
+    }
+    saveCart();
+  }
+}
+
+function removeFromCart(id, size) {
+  cart = cart.filter(item => !(item.id === id && item.size === size));
+  saveCart();
+}
+
+function clearCart() {
+  cart = [];
+  saveCart();
+}
+
+function toggleCartDrawer(forceOpen) {
+  const drawer = document.getElementById('cart-drawer');
+  const backdrop = document.getElementById('cart-backdrop');
+  if (!drawer || !backdrop) return;
+
+  const isOpen = forceOpen !== undefined ? forceOpen : !drawer.classList.contains('active');
+  drawer.classList.toggle('active', isOpen);
+  backdrop.classList.toggle('active', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+function updateCartUI() {
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Update Navbar Badges
+  const badgeCount = document.getElementById('cart-badge-count');
+  if (badgeCount) {
+    badgeCount.textContent = totalItems;
+    badgeCount.classList.toggle('visible', totalItems > 0);
+  }
+
+  // Update Drawer Header Count
+  const drawerCount = document.getElementById('cart-drawer-count');
+  if (drawerCount) {
+    drawerCount.textContent = `(${totalItems} ${totalItems === 1 ? 'prenda' : 'prendas'})`;
+  }
+
+  // Update Items Container
+  const container = document.getElementById('cart-items-container');
+  const footer = document.getElementById('cart-footer');
+  if (!container) return;
+
+  if (cart.length === 0) {
+    container.innerHTML = `
+      <div class="cart-empty-state">
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <p class="empty-title">Tu changuito está vacío</p>
+        <p class="empty-subtitle">Un changuito vacio, es un changuito triste, llevate algo dale ;)</p>
+        <a href="productos.html" class="btn btn-primary" onclick="toggleCartDrawer(false)">Ver Colección</a>
+      </div>
+    `;
+    if (footer) footer.style.display = 'none';
+  } else {
+    if (footer) footer.style.display = 'block';
+
+    let totalAmount = 0;
+    container.innerHTML = cart.map(item => {
+      const itemSubtotal = item.price * item.quantity;
+      totalAmount += itemSubtotal;
+      return `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+          <div class="cart-item-info">
+            <span class="cart-item-cat">${item.categoryLabel || ''}</span>
+            <h4 class="cart-item-title">${item.name}</h4>
+            <span class="cart-item-size">Talle: <strong>${item.size}</strong></span>
+            <div class="cart-item-price-row">
+              <span class="cart-item-price">${formatPrice(item.price)}</span>
+              <div class="qty-selector mini">
+                <button type="button" class="qty-btn" onclick="updateCartItemQuantity('${item.id}', '${item.size}', -1)" aria-label="Reducir">-</button>
+                <span>${item.quantity}</span>
+                <button type="button" class="qty-btn" onclick="updateCartItemQuantity('${item.id}', '${item.size}', 1)" aria-label="Aumentar">+</button>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="cart-item-remove" onclick="removeFromCart('${item.id}', '${item.size}')" aria-label="Eliminar prenda">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    const totalPriceEl = document.getElementById('cart-total-price');
+    if (totalPriceEl) totalPriceEl.textContent = formatPrice(totalAmount);
+
+    const whatsappBtn = document.getElementById('cart-whatsapp-btn');
+    if (whatsappBtn) {
+      let msg = `Hola Felipe, me interesa consultar disponibilidad / solicitar información por mi changuito de compras en FEL:\n\n`;
+      cart.forEach(item => {
+        msg += `• ${item.name.trim()} (Talle: ${item.size}) x${item.quantity} — ${formatPrice(item.price * item.quantity)}\n`;
+      });
+      msg += `\n*Total Estimado: ${formatPrice(totalAmount)}*\n\n¿Tienen stock disponible y cuáles son las opciones de pago/envío?`;
+
+      whatsappBtn.href = `https://wa.me/5493456450663?text=${encodeURIComponent(msg)}`;
+    }
+  }
+}
+
+function showToast(message) {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+
+  const toast = document.createElement('div');
+  toast.className = 'toast-notification';
+  toast.innerHTML = `
+    <div class="toast-content">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span>${message}</span>
+    </div>
+    <button class="toast-action" onclick="toggleCartDrawer(true)">Ver Changuito</button>
+  `;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 10);
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 400);
+  }, 3500);
+}
+
+function showFunPopup(message) {
+  const existing = document.getElementById('fun-modal');
+  if (existing) existing.remove();
+
+  const backdrop = document.createElement('div');
+  backdrop.id = 'fun-modal';
+  backdrop.className = 'fun-modal-backdrop';
+  backdrop.innerHTML = `
+    <div class="fun-modal-box">
+      <p class="fun-modal-text">${message}</p>
+      <button type="button" class="btn btn-primary fun-modal-btn">¡Tranqui, solo miraba!</button>
+    </div>
+  `;
+
+  document.body.appendChild(backdrop);
+
+  setTimeout(() => backdrop.classList.add('active'), 10);
+
+  const closePopup = () => {
+    backdrop.classList.remove('active');
+    setTimeout(() => backdrop.remove(), 300);
+  };
+
+  // ONLY close when clicking the button text
+  backdrop.querySelector('.fun-modal-btn').addEventListener('click', closePopup);
 }
 
 // NAVBAR SCROLL EFFECT
@@ -181,61 +393,103 @@ function openProductModal(productId) {
   document.getElementById('modal-price').textContent = formatPrice(product.price);
   document.getElementById('modal-desc').textContent = product.description;
   document.getElementById('modal-materials').textContent = product.materials;
-  // Handle Sizes Option Selector
+
+  // Handle Sizes & Quantity Selector
+  let selectedSize = 'M';
+  let selectedQty = 1;
+
   const sizesContainer = document.getElementById('modal-sizes');
   if (sizesContainer) {
-    const sizeOptions = ['XS', 'S', 'M', 'L', 'XL'];
-    let selectedSize = 'M'; // Default to 'M'
-
-    const updateWhatsAppLink = (size) => {
-      const consultBtn = document.getElementById('modal-consult-btn');
-      if (consultBtn) {
-        if (product.availability === 'ofstock' || product.availability === 'outofstock') {
-          consultBtn.innerHTML = 'Solicitar informacion';
-          consultBtn.href = 'index.html#contacto';
-          consultBtn.target = '_self';
-          consultBtn.onclick = () => {
-            closeModal();
-          };
-        } else {
-          consultBtn.target = '_blank';
-          consultBtn.onclick = null;
-          const formattedPrice = formatPrice(product.price);
-          const textMsg = `Hola Felipe, me interesa consultar por la prenda "${product.name.trim()}" en talle ${size} (${formattedPrice}). ¿Tienen stock disponible?`;
-          consultBtn.href = `https://wa.me/5493456450663?text=${encodeURIComponent(textMsg)}`;
-          consultBtn.innerHTML = `<svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24">
-            <path
-              d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.504-5.714-1.464L0 24zm6.586-3.834l.366.218c1.6.952 3.454 1.455 5.352 1.456 5.793 0 10.511-4.721 10.514-10.518.001-2.807-1.09-5.446-3.076-7.437C17.466 2.395 14.823 1.3 12.012 1.3c-5.797 0-10.518 4.722-10.521 10.52-.001 1.947.509 3.847 1.479 5.487l.239.406-1.011 3.693 3.788-.992zm11.758-7.66c-.301-.15-1.782-.88-2.059-.98-.277-.101-.48-.15-.68.15-.2.301-.776.98-.952 1.18-.176.2-.352.226-.653.075-1.393-.697-2.316-1.229-3.238-2.81-.242-.416.242-.386.693-1.286.075-.15.038-.282-.019-.382-.056-.1-.48-1.157-.658-1.582-.173-.415-.349-.359-.48-.365-.125-.005-.268-.006-.411-.006s-.375.053-.571.267c-.196.213-.75.733-.75 1.79 0 1.056.769 2.079.876 2.223.107.144 1.51 2.305 3.659 3.233.51.221.908.353 1.218.452.513.163.98.14 1.348.084.411-.062 1.782-.73 2.033-1.433.253-.704.253-1.306.177-1.432-.077-.127-.278-.201-.58-.352z" />
-          </svg>Consultar por WhatsApp`;
-        }
-      }
-    };
-
+    const sizeOptions = ['S', 'M', 'L', 'XL', 'XXL'];
     sizesContainer.innerHTML = sizeOptions.map(size => {
       const isSelected = size === selectedSize;
-      return `<button class="size-btn ${isSelected ? 'active' : ''}" data-size="${size}">${size}</button>`;
+      return `<button type="button" class="size-btn ${isSelected ? 'active' : ''}" data-size="${size}">${size}</button>`;
     }).join('');
 
-    // Set initial link
-    updateWhatsAppLink(selectedSize);
-
-    // Add click listeners to size buttons
     const sizeButtons = sizesContainer.querySelectorAll('.size-btn');
     sizeButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         sizeButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const newSize = btn.getAttribute('data-size');
-        updateWhatsAppLink(newSize);
+        selectedSize = btn.getAttribute('data-size');
       });
     });
   }
 
+  // Quantity controls in modal
+  const qtyValEl = document.getElementById('modal-qty-val');
+  const qtyMinusBtn = document.getElementById('modal-qty-minus');
+  const qtyPlusBtn = document.getElementById('modal-qty-plus');
+  const qtyMetaItem = qtyValEl ? qtyValEl.closest('.modal-meta-item') : null;
+
+  const isOutOfStock = product.availability === 'ofstock' || product.availability === 'outofstock' || product.availability === 'outstock';
+
+  if (qtyMetaItem) {
+    qtyMetaItem.style.display = isOutOfStock ? 'none' : 'flex';
+  }
+
+  if (qtyValEl) qtyValEl.textContent = selectedQty;
+
+  if (qtyMinusBtn) {
+    qtyMinusBtn.onclick = (e) => {
+      e.preventDefault();
+      if (selectedQty > 1) {
+        selectedQty--;
+        if (qtyValEl) qtyValEl.textContent = selectedQty;
+      }
+    };
+  }
+
+  if (qtyPlusBtn) {
+    qtyPlusBtn.onclick = (e) => {
+      e.preventDefault();
+      selectedQty++;
+      if (qtyValEl) qtyValEl.textContent = selectedQty;
+      if (selectedQty === 8) {
+        showFunPopup('Epaa ¿que vas a hacer con tanta ropa?');
+      }
+    };
+  }
+
+  // Handle Availability & Action Button
+  const addCartBtn = document.getElementById('modal-add-cart-btn');
+  if (addCartBtn) {
+    if (isOutOfStock) {
+      addCartBtn.innerHTML = `
+        <svg style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2;" viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        Consultar pieza
+      `;
+      addCartBtn.onclick = (e) => {
+        e.preventDefault();
+        closeModal();
+        window.location.href = 'index.html#contacto';
+      };
+    } else {
+      addCartBtn.innerHTML = `
+        <svg style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2;" viewBox="0 0 24 24">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        Agregar al Changuito
+      `;
+      addCartBtn.onclick = (e) => {
+        e.preventDefault();
+        addToCart(product, selectedSize, selectedQty);
+        closeModal();
+      };
+    }
+  }
+
   // Handle Availability Badge
   const statusElement = document.getElementById('modal-status');
-  statusElement.className = `modal-meta-value ${product.availability}`;
-  statusElement.textContent = product.availabilityLabel;
+  if (statusElement) {
+    statusElement.className = `modal-meta-value ${product.availability}`;
+    statusElement.textContent = product.availabilityLabel;
+  }
 
   // Open modal
   modal.classList.add('active');
@@ -259,6 +513,29 @@ if (modal) {
     }
   });
 }
+
+// Initial Cart setup and Event Listeners
+loadCart();
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadCart();
+
+  const navCartBtn = document.getElementById('nav-cart-btn');
+  const cartCloseBtn = document.getElementById('cart-close-btn');
+  const cartBackdrop = document.getElementById('cart-backdrop');
+  const cartClearBtn = document.getElementById('cart-clear-btn');
+
+  if (navCartBtn) navCartBtn.addEventListener('click', () => toggleCartDrawer(true));
+  if (cartCloseBtn) cartCloseBtn.addEventListener('click', () => toggleCartDrawer(false));
+  if (cartBackdrop) cartBackdrop.addEventListener('click', () => toggleCartDrawer(false));
+  if (cartClearBtn) {
+    cartClearBtn.addEventListener('click', () => {
+      if (confirm('¿Estás seguro de que deseas vaciar tu changuito?')) {
+        clearCart();
+      }
+    });
+  }
+});
 
 // RENDER A SINGLE PRODUCT CARD
 function createProductCardHTML(product) {
