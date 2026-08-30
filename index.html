@@ -214,10 +214,9 @@
         <div>
           <h4 class="footer-title">Colecciones</h4>
           <ul class="footer-links">
-            <li><a href="./productos.html?filter=pantalones">Pantalones</a></li>
-            <li><a href="./productos.html?filter=tapados">Abrigos</a></li>
-            <li><a href="./productos.html?filter=remeras">Remeras</a></li>
-            <li><a href="./productos.html?filter=accesorios">Accesorios</a></li>
+            <li><a href="./productos.html?collection=2-am">Colección 2 AM</a></li>
+            <li><a href="./productos.html?collection=octubre">Colección Octubre</a></li>
+            <li><a href="./productos.html">Todas las Colecciones</a></li>
           </ul>
         </div>
 
@@ -283,9 +282,16 @@
             <span class="modal-meta-label">Composición</span>
             <span class="modal-meta-value" id="modal-materials">Materiales</span>
           </div>
-          <div class="modal-meta-item">
+          <div class="modal-meta-item modal-sizes-meta-item">
             <span class="modal-meta-label">Talles</span>
             <div class="modal-sizes-options" id="modal-sizes">Talles</div>
+            <button type="button" class="size-chart-trigger-btn" id="modal-size-chart-btn" style="display: none;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              Ver tabla de talles
+            </button>
           </div>
           <div class="modal-meta-item">
             <span class="modal-meta-label">Cantidad</span>
@@ -311,6 +317,44 @@
           </svg>
           Agregar al Changuito
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIZE CHART IMAGE MODAL -->
+  <div id="size-chart-modal" class="modal size-chart-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content size-chart-content">
+      <div class="size-chart-box">
+        <button class="modal-close-btn" id="size-chart-close" aria-label="Cerrar tabla de talles">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
+        </button>
+        <img id="size-chart-img" src="" alt="Tabla de Talles">
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL IMAGE LIGHTBOX MODAL -->
+  <div id="image-lightbox-modal" class="modal image-lightbox-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content lightbox-content">
+      <div class="lightbox-box">
+        <button class="modal-close-btn" id="lightbox-close" aria-label="Cerrar imagen">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
+        </button>
+        <div class="lightbox-img-wrapper">
+          <button class="lightbox-arrow prev" id="lightbox-prev" aria-label="Imagen anterior">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/></svg>
+          </button>
+          <img id="lightbox-img" src="" alt="Vista previa de producto">
+          <button class="lightbox-arrow next" id="lightbox-next" aria-label="Siguiente imagen">
+            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -43,47 +43,74 @@
   </nav>
 
   <!-- CATALOG HERO HEADER -->
-  <header class="products-header">
+  <header class="products-header" id="catalog-hero-header">
     <div class="container">
-      <span class="section-subtitle" style="margin-bottom: 1rem;">Colecciones</span>
-      <h1 style="font-size: 3rem;">El Catálogo</h1>
+      <nav class="catalog-breadcrumbs" id="catalog-breadcrumbs" aria-label="Navegación del catálogo">
+        <!-- Dynamically rendered via app.js -->
+      </nav>
+      <div id="catalog-header-text">
+        <h1 id="catalog-title" style="font-size: 2.8rem; margin-bottom: 0.5rem;">Carpetas de Colección</h1>
+        <p id="catalog-desc" style="color: var(--color-muted); max-width: 620px; font-size: 0.95rem;">
+          Explorá nuestras carpetas exhibidas. Seleccioná una colección para ver sus piezas expuestas y armar tu changuito.
+        </p>
+      </div>
     </div>
   </header>
 
-  <!-- PRODUCTS GRID VIEW -->
-  <section class="section" style="padding-top: 4rem;">
+  <!-- CATALOG CONTENT SECTION -->
+  <section class="section" style="padding-top: 2.5rem; padding-bottom: 5rem;">
     <div class="container">
 
-      <!-- Filters and Search Bar -->
-      <div class="products-filter-section">
-        <div class="filter-group">
-          <button class="filter-dropdown-toggle" id="filter-dropdown-toggle">
-            <span>Categorías</span>
-            <svg viewBox="0 0 24 24">
-              <path d="M7 10l5 5 5-5z" fill="currentColor" />
-            </svg>
-          </button>
-          <div class="filter-options" id="filter-options">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="pantalones">Pantalones</button>
-            <button class="filter-btn" data-filter="tapados">Abrigos</button>
-            <button class="filter-btn" data-filter="remeras">Remeras</button>
-            <button class="filter-btn" data-filter="accesorios">Accesorios</button>
-          </div>
-        </div>
-
-        <div class="search-box">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-          </svg>
-          <input type="text" id="search-input" placeholder="Buscar prenda...">
+      <!-- FOLDERS VIEW (Carpetas de Colecciones Exhibidas) -->
+      <div id="collections-folders-view" class="collections-folders-view">
+        <div class="collections-grid" id="collections-grid">
+          <!-- Dynamically populated via app.js -->
         </div>
       </div>
 
-      <!-- Main Dynamic Grid -->
-      <div class="products-grid" id="products-grid">
-        <!-- Dynamically populated via app.js -->
+      <!-- INSIDE FOLDER VIEW (Prendas de la Colección Seleccionada) -->
+      <div id="collection-products-view" class="collection-products-view" style="display: none;">
+        
+        <!-- Controls Bar: Back Button, Category Filters & Search -->
+        <div class="products-filter-section">
+          <button class="back-to-collections-btn" id="back-to-collections-btn" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Volver a Colecciones</span>
+          </button>
+
+          <div class="filter-group">
+            <button class="filter-dropdown-toggle" id="filter-dropdown-toggle">
+              <span>Categorías</span>
+              <svg viewBox="0 0 24 24">
+                <path d="M7 10l5 5 5-5z" fill="currentColor" />
+              </svg>
+            </button>
+            <div class="filter-options" id="filter-options">
+              <button class="filter-btn active" data-filter="all">Todos</button>
+              <button class="filter-btn" data-filter="pantalones">Pantalones</button>
+              <button class="filter-btn" data-filter="tapados">Abrigos</button>
+              <button class="filter-btn" data-filter="remeras">Remeras</button>
+              <button class="filter-btn" data-filter="accesorios">Accesorios</button>
+            </div>
+          </div>
+
+          <div class="search-box">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+            <input type="text" id="search-input" placeholder="Buscar prenda...">
+          </div>
+        </div>
+
+        <!-- Garments Dynamic Grid -->
+        <div class="products-grid" id="products-grid">
+          <!-- Dynamically populated via app.js -->
+        </div>
+
       </div>
 
     </div>
@@ -101,10 +128,9 @@
         <div>
           <h4 class="footer-title">Colecciones</h4>
           <ul class="footer-links">
-            <li><a href="./productos.html?filter=pantalones">Pantalones</a></li>
-            <li><a href="./productos.html?filter=tapados">Abrigos</a></li>
-            <li><a href="./productos.html?filter=remeras">Remeras</a></li>
-            <li><a href="./productos.html?filter=accesorios">Accesorios</a></li>
+            <li><a href="./productos.html?collection=octubre">Colección Octubre</a></li>
+            <li><a href="./productos.html?collection=2-am">Colección 2 AM</a></li>
+            <li><a href="./productos.html">Todas las Colecciones</a></li>
           </ul>
         </div>
 
@@ -174,9 +200,16 @@
             <span class="modal-meta-label">Composición</span>
             <span class="modal-meta-value" id="modal-materials">Materiales</span>
           </div>
-          <div class="modal-meta-item">
+          <div class="modal-meta-item modal-sizes-meta-item">
             <span class="modal-meta-label">Talles</span>
             <div class="modal-sizes-options" id="modal-sizes">Talles</div>
+            <button type="button" class="size-chart-trigger-btn" id="modal-size-chart-btn" style="display: none;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              Ver tabla de talles
+            </button>
           </div>
           <div class="modal-meta-item">
             <span class="modal-meta-label">Cantidad</span>
@@ -200,6 +233,44 @@
           </svg>
           Agregar al Changuito
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIZE CHART IMAGE MODAL -->
+  <div id="size-chart-modal" class="modal size-chart-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content size-chart-content">
+      <div class="size-chart-box">
+        <button class="modal-close-btn" id="size-chart-close" aria-label="Cerrar tabla de talles">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
+        </button>
+        <img id="size-chart-img" src="" alt="Tabla de Talles">
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL IMAGE LIGHTBOX MODAL -->
+  <div id="image-lightbox-modal" class="modal image-lightbox-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content lightbox-content">
+      <div class="lightbox-box">
+        <button class="modal-close-btn" id="lightbox-close" aria-label="Cerrar imagen">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
+        </button>
+        <div class="lightbox-img-wrapper">
+          <button class="lightbox-arrow prev" id="lightbox-prev" aria-label="Imagen anterior">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/></svg>
+          </button>
+          <img id="lightbox-img" src="" alt="Vista previa de producto">
+          <button class="lightbox-arrow next" id="lightbox-next" aria-label="Siguiente imagen">
+            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>

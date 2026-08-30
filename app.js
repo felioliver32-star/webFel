@@ -1,12 +1,46 @@
-// FEL DESIGN CLOTHING - PRODUCTS DATABASE
+// FEL DESIGN CLOTHING - COLLECTIONS & PRODUCTS DATABASE
+const COLLECTIONS = [
+  {
+    id: "octubre",
+    name: "Colección Octubre",
+    subtitle: "Cápsula N° 01",
+    season: "Colección 2026",
+    order: 1,
+    badge: "5 Piezas Exhibidas",
+    description: "Diseños de autor confeccionados en corderoy marrón, lanilla y tejidos estructurados.",
+    coverImage: "./assets/trousers_tailored.png",
+    previews: [
+      "./assets/trousers_tailored.png",
+      "./assets/blazer_wool.png",
+      "./assets/coat_linen.png"
+    ]
+  },
+  {
+    id: "2-am",
+    name: "Colección 2 AM",
+    subtitle: "Cápsula N° 02",
+    season: "Colección 2026",
+    order: 2,
+    badge: "3 Piezas Exhibidas",
+    description: "Cápsula confeccionada en denim premium de 10 onzas con sus avios en metal y etiqueta bordada en cuero.",
+    coverImage: "./assets/Bermuda 3cuartos Delantero.png",
+    previews: [
+      "./assets/Bermuda 3cuartos Delantero.png",
+      "./assets/Falda Denim Delantero.png",
+      "./assets/Short Denim Delantero.png"
+    ]
+  }
+];
+
 const PRODUCTS = [
   {
     id: "coat-linen",
     name: "Remera negra doble manga",
+    collection: "octubre",
     category: "remeras",
     categoryLabel: "Remeras",
     price: 30000,
-    availability: "ofsotck",
+    availability: "ofstock",
     availabilityLabel: "Agotado",
     image: "./assets/coat_linen.png",
     description: "Remera negra mangas cortas con mangas largas integradas en un tejido grueso con diseño.",
@@ -16,6 +50,7 @@ const PRODUCTS = [
   {
     id: "coat-linen-beige",
     name: "Remera beige doble manga",
+    collection: "octubre",
     category: "remeras",
     categoryLabel: "Remeras",
     price: 30000,
@@ -30,6 +65,7 @@ const PRODUCTS = [
   {
     id: "blazer-wool",
     name: "Pantalon Octubre",
+    collection: "octubre",
     category: "pantalones",
     categoryLabel: "Pantalones",
     price: 55000,
@@ -44,6 +80,7 @@ const PRODUCTS = [
   {
     id: "sweater-knit",
     name: "Gorro beanie rigido",
+    collection: "octubre",
     category: "accesorios",
     categoryLabel: "Accesorios",
     price: 20000,
@@ -58,6 +95,7 @@ const PRODUCTS = [
   {
     id: "trousers-tailored",
     name: "Abrigo Octubre",
+    collection: "octubre",
     category: "tapados",
     categoryLabel: "Abrigos",
     price: 65000,
@@ -68,6 +106,56 @@ const PRODUCTS = [
     description: "Abrigo de corderoy y tejido con diseño, forrado en todo su interior con lanilla. Cierre reforzado y cuello estilo camisa.",
     materials: "Corderoy, Lanilla",
     sizes: "L/XL"
+  },
+
+  // COLECCIÓN 2 AM
+  {
+    id: "bermuda-3cuartos",
+    name: "Bermuda 3cuartos Denim",
+    collection: "2-am",
+    category: "pantalones",
+    categoryLabel: "Pantalones",
+    price: 43000,
+    availability: "instock",
+    availabilityLabel: "Disponible",
+    image: "./assets/Bermuda 3cuartos Delantero.png",
+    images: ["./assets/Bermuda 3cuartos Delantero.png", "./assets/Bermuda 3cuartos Trasero.png"],
+    description: "Bermuda tres cuartos elaborada en denim de 10 onzas, ideal para mantener la forma sin retener tanto el calor del cuerpo, especial para media temporada.",
+    materials: "Denim 10 oz",
+    sizes: "S - M - L",
+    sizeChartImage: "./assets/Tabla de talles - 2.png"
+  },
+  {
+    id: "falda-denim",
+    name: "Pollera corta Denim",
+    collection: "2-am",
+    category: "pantalones",
+    categoryLabel: "Pantalones",
+    price: 35500,
+    availability: "instock",
+    availabilityLabel: "Disponible",
+    image: "./assets/Falda Denim Delantero.png",
+    images: ["./assets/Falda Denim Delantero.png", "./assets/Falda Denim Trasero.png"],
+    description: "Falda corta elaborada en denim de 10 onzas, ideal para mantener la forma amoldandose al cuerpo.",
+    materials: "Denim 10 oz",
+    sizes: "S - M - L",
+    sizeChartImage: "./assets/Tabla de talles - 1.png"
+  },
+  {
+    id: "short-denim",
+    name: "Short Cortado Denim",
+    collection: "2-am",
+    category: "pantalones",
+    categoryLabel: "Pantalones",
+    price: 38000,
+    availability: "instock",
+    availabilityLabel: "Disponible",
+    image: "./assets/Short Denim Delantero.png",
+    images: ["./assets/Short Denim Delantero.png", "./assets/Short Denim Trasero.png"],
+    description: "Short elaborado en denim de 10 onzas, pensado para hombres y mujeres al presentar una forma y largo que se adapta al cuerpo, ideal para mantener la forma sin retener tanto el calor y especial para media temporada.",
+    materials: "Denim 10 oz",
+    sizes: "S - M - L",
+    sizeChartImage: "./assets/Tabla de talles - 3.png"
   }
 ];
 
@@ -227,11 +315,11 @@ function updateCartUI() {
 
     const whatsappBtn = document.getElementById('cart-whatsapp-btn');
     if (whatsappBtn) {
-      let msg = `Hola Felipe, me interesa consultar disponibilidad / solicitar información por mi changuito de compras en FEL:\n\n`;
+      let msg = `Hola Felipe, estoy interesad@ en estas prendas:\n\n`;
       cart.forEach(item => {
         msg += `• ${item.name.trim()} (Talle: ${item.size}) x${item.quantity} — ${formatPrice(item.price * item.quantity)}\n`;
       });
-      msg += `\n*Total Estimado: ${formatPrice(totalAmount)}*\n\n¿Tienen stock disponible y cuáles son las opciones de pago/envío?`;
+      msg += `\n*Total Estimado: ${formatPrice(totalAmount)}*\n\n¿Tenes stock disponible y cuáles son las opciones de pago/envío?`;
 
       whatsappBtn.href = `https://wa.me/5493456450663?text=${encodeURIComponent(msg)}`;
     }
@@ -349,12 +437,20 @@ function openProductModal(productId) {
   // Handle dynamic gallery images
   const galleryContainer = document.querySelector('.modal-gallery');
   if (galleryContainer) {
-    const mainImgSrc = product.images ? product.images[0] : product.image;
-    galleryContainer.innerHTML = `<img id="modal-img" src="${mainImgSrc}" alt="${product.name}">`;
+    let currentImgIdx = 0;
+    const productImages = product.images && product.images.length > 0 ? product.images : [product.image];
+    const mainImgSrc = productImages[0];
 
-    if (product.images && product.images.length > 1) {
-      let currentImgIdx = 0;
+    galleryContainer.innerHTML = `<img id="modal-img" src="${mainImgSrc}" alt="${product.name}" title="Haz clic para ver foto completa" style="cursor: pointer;">`;
 
+    const modalImg = document.getElementById('modal-img');
+    if (modalImg) {
+      modalImg.onclick = () => {
+        openLightboxModal(productImages, currentImgIdx, product.name);
+      };
+    }
+
+    if (productImages.length > 1) {
       // Render arrows
       const prevBtn = document.createElement('button');
       prevBtn.className = 'modal-gallery-arrow prev';
@@ -367,9 +463,9 @@ function openProductModal(productId) {
       nextBtn.setAttribute('aria-label', 'Siguiente imagen');
 
       const updateGalleryState = (index) => {
-        currentImgIdx = (index + product.images.length) % product.images.length;
-        const targetSrc = product.images[currentImgIdx];
-        document.getElementById('modal-img').src = targetSrc;
+        currentImgIdx = (index + productImages.length) % productImages.length;
+        const targetSrc = productImages[currentImgIdx];
+        if (modalImg) modalImg.src = targetSrc;
       };
 
       prevBtn.addEventListener('click', (e) => {
@@ -417,13 +513,27 @@ function openProductModal(productId) {
     });
   }
 
+  // Handle Size Chart Link Button
+  const sizeChartBtn = document.getElementById('modal-size-chart-btn');
+  if (sizeChartBtn) {
+    if (product.sizeChartImage) {
+      sizeChartBtn.style.display = 'inline-flex';
+      sizeChartBtn.onclick = (e) => {
+        e.preventDefault();
+        openSizeChartModal(product.sizeChartImage, product.name);
+      };
+    } else {
+      sizeChartBtn.style.display = 'none';
+    }
+  }
+
   // Quantity controls in modal
   const qtyValEl = document.getElementById('modal-qty-val');
   const qtyMinusBtn = document.getElementById('modal-qty-minus');
   const qtyPlusBtn = document.getElementById('modal-qty-plus');
   const qtyMetaItem = qtyValEl ? qtyValEl.closest('.modal-meta-item') : null;
 
-  const isOutOfStock = product.availability === 'ofstock' || product.availability === 'outofstock' || product.availability === 'outstock';
+  const isOutOfStock = product.availability === 'ofstock' || product.availability === 'outofstock' || product.availability === 'outstock' || product.availability === 'ofsotck';
 
   if (qtyMetaItem) {
     qtyMetaItem.style.display = isOutOfStock ? 'none' : 'flex';
@@ -502,6 +612,79 @@ function closeModal() {
   document.body.style.overflow = ''; // Restore scroll
 }
 
+// SIZE CHART MODAL LOGIC
+function openSizeChartModal(imageSrc, titleText) {
+  const sizeChartModal = document.getElementById('size-chart-modal');
+  const sizeChartImg = document.getElementById('size-chart-img');
+  if (!sizeChartModal || !sizeChartImg) return;
+
+  sizeChartImg.src = imageSrc;
+  sizeChartImg.alt = `Tabla de Talles - ${titleText || ''}`;
+  sizeChartModal.classList.add('active');
+}
+
+function closeSizeChartModal() {
+  const sizeChartModal = document.getElementById('size-chart-modal');
+  if (sizeChartModal) {
+    sizeChartModal.classList.remove('active');
+  }
+}
+
+// FULL IMAGE LIGHTBOX MODAL LOGIC
+let currentLightboxImages = [];
+let currentLightboxIndex = 0;
+let currentLightboxTitle = '';
+
+function openLightboxModal(images, startIndex, titleText) {
+  const lightboxModal = document.getElementById('image-lightbox-modal');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+
+  if (!lightboxModal || !lightboxImg) return;
+
+  currentLightboxImages = images && images.length > 0 ? images : [];
+  currentLightboxIndex = startIndex || 0;
+  currentLightboxTitle = titleText || '';
+
+  const updateLightboxState = () => {
+    if (currentLightboxImages.length === 0) return;
+    currentLightboxIndex = (currentLightboxIndex + currentLightboxImages.length) % currentLightboxImages.length;
+    lightboxImg.src = currentLightboxImages[currentLightboxIndex];
+    lightboxImg.alt = `${currentLightboxTitle} - Imagen ${currentLightboxIndex + 1}`;
+
+    if (prevBtn) prevBtn.style.display = currentLightboxImages.length > 1 ? 'flex' : 'none';
+    if (nextBtn) nextBtn.style.display = currentLightboxImages.length > 1 ? 'flex' : 'none';
+  };
+
+  updateLightboxState();
+
+  if (prevBtn) {
+    prevBtn.onclick = (e) => {
+      e.stopPropagation();
+      currentLightboxIndex--;
+      updateLightboxState();
+    };
+  }
+
+  if (nextBtn) {
+    nextBtn.onclick = (e) => {
+      e.stopPropagation();
+      currentLightboxIndex++;
+      updateLightboxState();
+    };
+  }
+
+  lightboxModal.classList.add('active');
+}
+
+function closeLightboxModal() {
+  const lightboxModal = document.getElementById('image-lightbox-modal');
+  if (lightboxModal) {
+    lightboxModal.classList.remove('active');
+  }
+}
+
 if (modalClose) {
   modalClose.addEventListener('click', closeModal);
 }
@@ -524,6 +707,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartCloseBtn = document.getElementById('cart-close-btn');
   const cartBackdrop = document.getElementById('cart-backdrop');
   const cartClearBtn = document.getElementById('cart-clear-btn');
+  const sizeChartCloseBtn = document.getElementById('size-chart-close');
+  const sizeChartModal = document.getElementById('size-chart-modal');
+  const lightboxCloseBtn = document.getElementById('lightbox-close');
+  const lightboxModal = document.getElementById('image-lightbox-modal');
 
   if (navCartBtn) navCartBtn.addEventListener('click', () => toggleCartDrawer(true));
   if (cartCloseBtn) cartCloseBtn.addEventListener('click', () => toggleCartDrawer(false));
@@ -535,12 +722,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  if (sizeChartCloseBtn) sizeChartCloseBtn.addEventListener('click', closeSizeChartModal);
+  if (sizeChartModal) {
+    sizeChartModal.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-backdrop')) {
+        closeSizeChartModal();
+      }
+    });
+  }
+  if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightboxModal);
+  if (lightboxModal) {
+    lightboxModal.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-backdrop')) {
+        closeLightboxModal();
+      }
+    });
+  }
 });
 
 // RENDER A SINGLE PRODUCT CARD
 function createProductCardHTML(product) {
   return `
-    <div class="product-card" data-category="${product.category}">
+    <div class="product-card" onclick="openProductModal('${product.id}')" tabindex="0" role="button" aria-label="Ver detalles de ${product.name}" data-category="${product.category}">
       <span class="product-badge ${product.availability}">${product.availabilityLabel}</span>
       <div class="product-img-wrapper">
         <img class="product-img" src="${product.image}" alt="${product.name}" loading="lazy">
@@ -550,7 +753,7 @@ function createProductCardHTML(product) {
         <h3 class="product-title">${product.name}</h3>
         <div class="product-price-row">
           <span class="product-price">${formatPrice(product.price)}</span>
-          <button class="product-view-btn" onclick="openProductModal('${product.id}')">
+          <button type="button" class="product-view-btn" onclick="event.stopPropagation(); openProductModal('${product.id}')">
             Detalles
             <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -565,8 +768,18 @@ function createProductCardHTML(product) {
 // ----------------------------------------
 const carouselTrack = document.getElementById('carousel-track');
 if (carouselTrack) {
+  // Sort products: Available first (newest to oldest), then Out of Stock (newest to oldest)
+  const productsWithIndex = PRODUCTS.map((p, idx) => ({ ...p, _index: idx }));
+  const availableProducts = productsWithIndex.filter(p => p.availability === 'instock');
+  const outOfStockProducts = productsWithIndex.filter(p => p.availability !== 'instock');
+
+  availableProducts.sort((a, b) => b._index - a._index);
+  outOfStockProducts.sort((a, b) => b._index - a._index);
+
+  const sortedHomepageProducts = [...availableProducts, ...outOfStockProducts];
+
   // Render Carousel items
-  carouselTrack.innerHTML = PRODUCTS.map(p => `
+  carouselTrack.innerHTML = sortedHomepageProducts.map(p => `
     <div class="carousel-slide">
       ${createProductCardHTML(p)}
     </div>
@@ -709,21 +922,198 @@ if (carouselTrack) {
 }
 
 // ----------------------------------------
+// COLLECTION FOLDER CARD HTML CREATOR
+// ----------------------------------------
+function createCollectionFolderCardHTML(collection) {
+  const collectionProducts = PRODUCTS.filter(p => p.collection === collection.id);
+  const itemCount = collectionProducts.length;
+  const countLabel = `${itemCount} ${itemCount === 1 ? 'pieza exhibida' : 'piezas exhibidas'}`;
+
+  // La colección figura como Disponible si tiene al menos un producto con stock/disponible, de lo contrario Agotada
+  const hasAvailableProduct = collectionProducts.some(p => {
+    const isOutOfStock = p.availability === 'ofstock' || p.availability === 'outofstock' || p.availability === 'outstock' || p.availability === 'ofsotck';
+    return !isOutOfStock;
+  });
+
+  const availabilityText = hasAvailableProduct ? 'Disponible' : 'Agotada';
+  const availabilityClass = hasAvailableProduct ? 'instock' : 'ofstock';
+
+  return `
+    <div class="collection-folder-card" onclick="openCollectionFolder('${collection.id}')" tabindex="0" role="button" aria-label="Abrir ${collection.name}" title="${countLabel}">
+      <div class="folder-tab">
+        <span class="folder-tab-label">${collection.subtitle || 'Cápsula Exhibida'}</span>
+        <span class="folder-tab-badge ${availabilityClass}">${availabilityText}</span>
+      </div>
+      
+      <div class="folder-card-inner">
+        <div class="folder-cover-wrapper">
+          <div class="folder-stacked-card stacked-1"></div>
+          <div class="folder-stacked-card stacked-2"></div>
+          <img src="${collection.coverImage}" alt="${collection.name}" class="folder-cover-img" loading="lazy">
+          <div class="folder-cover-overlay">
+            <span class="folder-preview-pill">Explorar prendas (${itemCount})</span>
+          </div>
+        </div>
+
+        <div class="folder-info">
+          <h3 class="folder-title">${collection.name}</h3>
+          <div class="folder-action-row">
+            <button type="button" class="btn btn-primary folder-open-btn">
+              <span>Ver Colección</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ----------------------------------------
 // CATALOG VIEW LOGIC (`pageProductos`)
 // ----------------------------------------
-const productsGrid = document.getElementById('products-grid');
-if (productsGrid) {
-  // Parse initial query params to set filter
-  const urlParams = new URLSearchParams(window.location.search);
-  const filterParam = urlParams.get('filter');
+const collectionsFoldersView = document.getElementById('collections-folders-view');
+const collectionProductsView = document.getElementById('collection-products-view');
 
+if (collectionsFoldersView && collectionProductsView) {
+  const urlParams = new URLSearchParams(window.location.search);
+  let collectionParam = urlParams.get('collection');
+  let filterParam = urlParams.get('filter');
+
+  // If filterParam is present without collectionParam, find which collection has items matching filter
+  if (!collectionParam && filterParam) {
+    const matchingProd = PRODUCTS.find(p => p.category === filterParam);
+    if (matchingProd) {
+      collectionParam = matchingProd.collection;
+    }
+  }
+
+  let currentCollectionId = collectionParam || null;
   let activeFilter = filterParam || 'all';
   let searchQuery = '';
 
-  function renderGrid() {
-    let filtered = PRODUCTS;
+  window.openCollectionFolder = function (collectionId) {
+    currentCollectionId = collectionId;
+    activeFilter = 'all';
+    searchQuery = '';
 
-    // Apply category filter
+    // Reset category filter buttons UI
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+      if (btn.getAttribute('data-filter') === 'all') {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    const filterToggle = document.getElementById('filter-dropdown-toggle');
+    if (filterToggle) {
+      filterToggle.querySelector('span').textContent = 'Categorías';
+    }
+
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) searchInput.value = '';
+
+    // Update URL query param quietly
+    const newUrl = new URL(window.location);
+    newUrl.searchParams.set('collection', collectionId);
+    newUrl.searchParams.delete('filter');
+    window.history.pushState({}, '', newUrl);
+
+    renderCatalogView();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  window.closeCollectionFolder = function () {
+    currentCollectionId = null;
+    activeFilter = 'all';
+    searchQuery = '';
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) searchInput.value = '';
+
+    // Clear URL query params quietly
+    const newUrl = new URL(window.location);
+    newUrl.searchParams.delete('collection');
+    newUrl.searchParams.delete('filter');
+    window.history.pushState({}, '', newUrl);
+
+    renderCatalogView();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const backBtn = document.getElementById('back-to-collections-btn');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      window.closeCollectionFolder();
+    });
+  }
+
+  function renderCatalogView() {
+    const breadcrumbs = document.getElementById('catalog-breadcrumbs');
+    const catalogTitle = document.getElementById('catalog-title');
+    const catalogDesc = document.getElementById('catalog-desc');
+
+    if (!currentCollectionId) {
+      // 1. SHOW COLLECTIONS FOLDERS VIEW
+      collectionsFoldersView.style.display = 'block';
+      collectionProductsView.style.display = 'none';
+
+      // Update Header Text
+      if (breadcrumbs) {
+        breadcrumbs.innerHTML = `
+          <a href="./index.html">Inicio</a>
+          <span class="crumb-separator">/</span>
+          <span class="crumb-active">Carpetas de Colección</span>
+        `;
+      }
+      if (catalogTitle) catalogTitle.textContent = 'Carpetas de Colección';
+      if (catalogDesc) catalogDesc.textContent = 'Explorá nuestras carpetas exhibidas. Seleccioná una colección para ver sus piezas expuestas y armar tu changuito.';
+
+      // Render Folders Grid (ordenado por recreciente: cápsula más reciente primero)
+      const collectionsGrid = document.getElementById('collections-grid');
+      if (collectionsGrid) {
+        const sortedCollections = [...COLLECTIONS].sort((a, b) => {
+          const orderA = a.order !== undefined ? a.order : parseInt((a.subtitle || '').replace(/\D/g, '')) || 0;
+          const orderB = b.order !== undefined ? b.order : parseInt((b.subtitle || '').replace(/\D/g, '')) || 0;
+          return orderB - orderA;
+        });
+        collectionsGrid.innerHTML = sortedCollections.map(col => createCollectionFolderCardHTML(col)).join('');
+      }
+    } else {
+      // 2. SHOW INSIDE COLLECTION PRODUCTS VIEW
+      const activeCol = COLLECTIONS.find(c => c.id === currentCollectionId) || COLLECTIONS[0];
+
+      collectionsFoldersView.style.display = 'none';
+      collectionProductsView.style.display = 'block';
+
+      // Update Header Text
+      if (breadcrumbs) {
+        breadcrumbs.innerHTML = `
+          <a href="./index.html">Inicio</a>
+          <span class="crumb-separator">/</span>
+          <a href="#" onclick="event.preventDefault(); window.closeCollectionFolder();">Colecciones</a>
+          <span class="crumb-separator">/</span>
+          <span class="crumb-active">${activeCol.name}</span>
+        `;
+      }
+      if (catalogTitle) catalogTitle.textContent = activeCol.name;
+      if (catalogDesc) catalogDesc.textContent = activeCol.description;
+
+      // Filter and render products inside this collection
+      renderCollectionProductsGrid(activeCol.id);
+    }
+  }
+
+  function renderCollectionProductsGrid(colId) {
+    const productsGrid = document.getElementById('products-grid');
+    if (!productsGrid) return;
+
+    let filtered = PRODUCTS.filter(p => p.collection === colId);
+
+    // Apply category sub-filter
     if (activeFilter !== 'all') {
       filtered = filtered.filter(p => p.category === activeFilter);
     }
@@ -738,11 +1128,11 @@ if (productsGrid) {
       );
     }
 
-    // Generate output
+    // Render products
     if (filtered.length === 0) {
       productsGrid.innerHTML = `
-        <div class="no-results">
-          <p>No se encontraron productos que coincidan con la búsqueda.</p>
+        <div class="no-results" style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem;">
+          <p style="font-size: 1.1rem; color: var(--color-muted);">No se encontraron prendas que coincidan con el filtro en esta colección.</p>
         </div>
       `;
     } else {
@@ -750,22 +1140,10 @@ if (productsGrid) {
     }
   }
 
-  // Set up filter buttons
+  // Set up category filter buttons inside collection
   const filterBtns = document.querySelectorAll('.filter-btn');
   const filterToggle = document.getElementById('filter-dropdown-toggle');
   const filterOptions = document.getElementById('filter-options');
-
-  // Set active class based on activeFilter
-  filterBtns.forEach(btn => {
-    if (btn.getAttribute('data-filter') === activeFilter) {
-      btn.classList.add('active');
-      if (filterToggle) {
-        filterToggle.querySelector('span').textContent = `Categoría: ${btn.textContent}`;
-      }
-    } else {
-      btn.classList.remove('active');
-    }
-  });
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -773,18 +1151,19 @@ if (productsGrid) {
       e.target.classList.add('active');
       activeFilter = e.target.getAttribute('data-filter');
 
-      // Update dropdown state and label if in mobile
       if (filterToggle && filterOptions) {
         filterToggle.querySelector('span').textContent = `Categoría: ${e.target.textContent}`;
         filterOptions.classList.remove('open');
         filterToggle.classList.remove('open');
       }
 
-      renderGrid();
+      if (currentCollectionId) {
+        renderCollectionProductsGrid(currentCollectionId);
+      }
     });
   });
 
-  // Toggle dropdown logic
+  // Toggle dropdown logic for mobile
   if (filterToggle && filterOptions) {
     filterToggle.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -805,12 +1184,14 @@ if (productsGrid) {
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value;
-      renderGrid();
+      if (currentCollectionId) {
+        renderCollectionProductsGrid(currentCollectionId);
+      }
     });
   }
 
   // Initial render
-  renderGrid();
+  renderCatalogView();
 }
 
 // ----------------------------------------
