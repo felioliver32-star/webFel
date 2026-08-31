@@ -194,6 +194,12 @@ function saveCart() {
   updateCartUI();
 }
 
+function getItemCollection(item) {
+  if (item.collection) return item.collection;
+  const prod = PRODUCTS.find(p => p.id === item.id);
+  return prod ? prod.collection : null;
+}
+
 function addToCart(product, size, qty = 1) {
   const existingIndex = cart.findIndex(item => item.id === product.id && item.size === size);
   if (existingIndex > -1) {
@@ -206,7 +212,8 @@ function addToCart(product, size, qty = 1) {
       price: product.price,
       image: product.images ? product.images[0] : product.image,
       size: size,
-      quantity: qty
+      quantity: qty,
+      collection: product.collection
     });
   }
   saveCart();
@@ -283,15 +290,26 @@ function updateCartUI() {
   } else {
     if (footer) footer.style.display = 'block';
 
-    let totalAmount = 0;
+    let subtotalAll = 0;
+    const unitPrices2am = [];
+
     container.innerHTML = cart.map(item => {
       const itemSubtotal = item.price * item.quantity;
-      totalAmount += itemSubtotal;
+      subtotalAll += itemSubtotal;
+
+      const collectionId = getItemCollection(item);
+      const is2AM = collectionId === '2-am';
+      if (is2AM) {
+        for (let i = 0; i < item.quantity; i++) {
+          unitPrices2am.push(item.price);
+        }
+      }
+
       return `
         <div class="cart-item">
           <img src="${item.image}" alt="${item.name}" class="cart-item-img">
           <div class="cart-item-info">
-            <span class="cart-item-cat">${item.categoryLabel || ''}</span>
+            <span class="cart-item-cat">${item.categoryLabel || ''}${is2AM ? ' • Colección 2 AM' : ''}</span>
             <h4 class="cart-item-title">${item.name}</h4>
             <span class="cart-item-size">Talle: <strong>${item.size}</strong></span>
             <div class="cart-item-price-row">
@@ -310,16 +328,93 @@ function updateCartUI() {
       `;
     }).join('');
 
-    const totalPriceEl = document.getElementById('cart-total-price');
-    if (totalPriceEl) totalPriceEl.textContent = formatPrice(totalAmount);
+    // Sort 2 AM unit prices ascending to discount the cheapest items first
+    unitPrices2am.sort((a, b) => a - b);
+    const count2am = unitPrices2am.length;
 
+    let discountPercent = 0;
+    let discountLabelText = "";
+    let discountableSubtotal = 0;
+
+    if (count2am === 2) {
+      discountPercent = 0.10;
+      discountLabelText = "Descuento Colección 2 AM (10% en 2 prendas):";
+      discountableSubtotal = unitPrices2am[0] + unitPrices2am[1];
+    } else if (count2am === 3) {
+      discountPercent = 0.20;
+      discountLabelText = "Descuento Colección 2 AM (20% en 3 prendas):";
+      discountableSubtotal = unitPrices2am[0] + unitPrices2am[1] + unitPrices2am[2];
+    } else if (count2am > 3) {
+      discountPercent = 0.20;
+      discountLabelText = "Descuento Colección 2 AM (20% en 3 prendas):";
+      discountableSubtotal = unitPrices2am[0] + unitPrices2am[1] + unitPrices2am[2];
+    }
+
+    const discountAmount = Math.round(discountableSubtotal * discountPercent);
+    const finalTotal = subtotalAll - discountAmount;
+
+    // Update Promo Banner
+    const promoBanner = document.getElementById('cart-promo-banner');
+    if (promoBanner) {
+      if (count2am === 0) {
+        promoBanner.className = 'cart-promo-banner';
+        promoBanner.innerHTML = `<span class="cart-promo-banner-icon">✨</span> <span><strong>Promo Colección 2 AM:</strong> 2 prendas con <strong>10% OFF</strong> | 3 prendas con <strong>20% OFF</strong> (aplica en 3 prendas)</span>`;
+      } else if (count2am === 1) {
+        promoBanner.className = 'cart-promo-banner';
+        promoBanner.innerHTML = `<span class="cart-promo-banner-icon">🔥</span> <span>¡Llevás 1 prenda! Agregá <strong>1 prenda más</strong> de la Colección 2 AM para activar <strong>10% OFF</strong></span>`;
+      } else if (count2am === 2) {
+        promoBanner.className = 'cart-promo-banner active-discount';
+        promoBanner.innerHTML = `<span class="cart-promo-banner-icon">🎉</span> <span><strong>¡10% OFF aplicado!</strong> Agregá 1 prenda más de la Colección 2 AM para obtener <strong>20% OFF</strong></span>`;
+      } else if (count2am === 3) {
+        promoBanner.className = 'cart-promo-banner active-discount';
+        promoBanner.innerHTML = `<span class="cart-promo-banner-icon">🔥</span> <span><strong>¡20% OFF aplicado!</strong> Aplica en tus 3 prendas de Colección 2 AM</span>`;
+      } else {
+        promoBanner.className = 'cart-promo-banner active-discount';
+        promoBanner.innerHTML = `<span class="cart-promo-banner-icon">🔥</span> <span><strong>¡20% OFF aplicado!</strong> Aplica en 3 prendas de la Colección 2 AM</span>`;
+      }
+    }
+
+    // Update Cart Totals Breakdown
+    const subtotalRow = document.getElementById('cart-subtotal-row');
+    const subtotalPriceEl = document.getElementById('cart-subtotal-price');
+    const discountRow = document.getElementById('cart-discount-row');
+    const discountLabelEl = document.getElementById('cart-discount-label');
+    const discountPriceEl = document.getElementById('cart-discount-price');
+    const totalPriceEl = document.getElementById('cart-total-price');
+
+    if (discountAmount > 0) {
+      if (subtotalRow) {
+        subtotalRow.style.display = 'flex';
+        if (subtotalPriceEl) subtotalPriceEl.textContent = formatPrice(subtotalAll);
+      }
+      if (discountRow) {
+        discountRow.style.display = 'flex';
+        if (discountLabelEl) discountLabelEl.textContent = discountLabelText;
+        if (discountPriceEl) discountPriceEl.textContent = `-${formatPrice(discountAmount)}`;
+      }
+    } else {
+      if (subtotalRow) subtotalRow.style.display = 'none';
+      if (discountRow) discountRow.style.display = 'none';
+    }
+
+    if (totalPriceEl) totalPriceEl.textContent = formatPrice(finalTotal);
+
+    // Update WhatsApp message
     const whatsappBtn = document.getElementById('cart-whatsapp-btn');
     if (whatsappBtn) {
       let msg = `Hola Felipe, estoy interesad@ en estas prendas:\n\n`;
       cart.forEach(item => {
-        msg += `• ${item.name.trim()} (Talle: ${item.size}) x${item.quantity} — ${formatPrice(item.price * item.quantity)}\n`;
+        const is2am = getItemCollection(item) === '2-am';
+        const tag = is2am ? ' [Colección 2 AM]' : '';
+        msg += `• ${item.name.trim()}${tag} (Talle: ${item.size}) x${item.quantity} — ${formatPrice(item.price * item.quantity)}\n`;
       });
-      msg += `\n*Total Estimado: ${formatPrice(totalAmount)}*\n\n¿Tenes stock disponible y cuáles son las opciones de pago/envío?`;
+
+      if (discountAmount > 0) {
+        msg += `\nSubtotal: ${formatPrice(subtotalAll)}\n`;
+        msg += `${discountLabelText} -${formatPrice(discountAmount)}\n`;
+      }
+
+      msg += `\n*Total Estimado: ${formatPrice(finalTotal)}*\n\nPodemos coordinar el envio?`;
 
       whatsappBtn.href = `https://wa.me/5493456450663?text=${encodeURIComponent(msg)}`;
     }

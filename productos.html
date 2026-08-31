@@ -292,9 +292,21 @@
     </div>
 
     <div class="cart-footer" id="cart-footer">
-      <div class="cart-total-row">
-        <span>Total Estimado:</span>
-        <span class="cart-total-price" id="cart-total-price">$0</span>
+      <div class="cart-promo-banner" id="cart-promo-banner"></div>
+
+      <div class="cart-summary-rows">
+        <div class="cart-summary-row" id="cart-subtotal-row" style="display: none;">
+          <span>Subtotal:</span>
+          <span id="cart-subtotal-price">$0</span>
+        </div>
+        <div class="cart-summary-row discount-row" id="cart-discount-row" style="display: none;">
+          <span id="cart-discount-label">Descuento Colección 2 AM:</span>
+          <span id="cart-discount-price" class="cart-discount-value">-$0</span>
+        </div>
+        <div class="cart-total-row">
+          <span>Total Estimado:</span>
+          <span class="cart-total-price" id="cart-total-price">$0</span>
+        </div>
       </div>
 
       <div class="cart-shipping-note">El valor del envio se calcula por whatsapp.</div>
