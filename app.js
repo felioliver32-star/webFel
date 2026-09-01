@@ -21,13 +21,14 @@ const COLLECTIONS = [
     subtitle: "Cápsula N° 02",
     season: "Colección 2026",
     order: 2,
-    badge: "3 Piezas Exhibidas",
+    badge: "4 Piezas Exhibidas",
     description: "Cápsula confeccionada en denim premium de 10 onzas con sus avios en metal y etiqueta bordada en cuero.",
     coverImage: "./assets/Bermuda 3cuartos Delantero.png",
     previews: [
       "./assets/Bermuda 3cuartos Delantero.png",
       "./assets/Falda Denim Delantero.png",
-      "./assets/Short Denim Delantero.png"
+      "./assets/Short Denim Delantero.png",
+      "./assets/Pantalon largo Denim.png"
     ]
   }
 ];
@@ -156,6 +157,22 @@ const PRODUCTS = [
     materials: "Denim 10 oz",
     sizes: "S - M - L",
     sizeChartImage: "./assets/Tabla de talles - 3.png"
+  },
+  {
+    id: "pantalon-largo-denim",
+    name: "Pantalon largo Denim",
+    collection: "2-am",
+    category: "pantalones",
+    categoryLabel: "Pantalones",
+    price: 48500,
+    availability: "instock",
+    availabilityLabel: "Disponible",
+    image: "./assets/Pantalon largo Denim.png",
+    images: ["./assets/Pantalon largo Denim.png"],
+    description: "Pantalon de Jean con bolsillos delanteros y traseros a la vista, avios en metal inoxidable y un diseño que se adpta muy bien al cuerpo sin perder amplitud.",
+    materials: "Denim 10 oz",
+    sizes: "S - M - L",
+    sizeChartImage: "./assets/Tabla de talles - 4.png"
   }
 ];
 
@@ -414,7 +431,7 @@ function updateCartUI() {
         msg += `${discountLabelText} -${formatPrice(discountAmount)}\n`;
       }
 
-      msg += `\n*Total Estimado: ${formatPrice(finalTotal)}*\n\nPodemos coordinar el envio?`;
+      msg += `\n*Total Estimado: ${formatPrice(finalTotal)} + envio. *\n\nPodemos coordinar el envio?`;
 
       whatsappBtn.href = `https://wa.me/5493456450663?text=${encodeURIComponent(msg)}`;
     }
